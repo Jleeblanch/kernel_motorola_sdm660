@@ -1425,7 +1425,7 @@ CONFIG_CAPSENSE_CYPRESS=y
 #
 # Moto Mod drivers
 #
-CONFIG_MOTOMODS=y
+CONFIG_MOTOMODS=m
 
 #
 # SCSI device support
