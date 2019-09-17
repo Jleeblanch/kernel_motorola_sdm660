@@ -12,3 +12,6 @@ himax_mmi-y := 	himax_ic_HX83112.o \
 		himax_ic_incell_core.o \
 		himax_common.o \
 		himax_debug.o
+
+ccflags-y += -Wno-error
+ccflags-y += -Wno-strlcpy-strlcat-size
