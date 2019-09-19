@@ -6,7 +6,10 @@ config SENSORS_SSC
 	  time syncing with ADSP clock.
 
 config SENSORS
-	bool "Sensors Class Support"
+	tristate "Sensors Class Support"
 	help
 	  This option enables the sensor sysfs class in /sys/class/sensors.
 	  You'll need this to do anything useful with sensorss. If unsure, say N.
+
+	  To compile this driver as a module, choose M here. This module 
+	  will be called sensors_class.

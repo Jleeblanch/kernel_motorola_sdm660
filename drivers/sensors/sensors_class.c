@@ -564,3 +564,4 @@ static void __exit sensors_exit(void)
 
 subsys_initcall(sensors_init);
 module_exit(sensors_exit);
+MODULE_LICENSE("GPL v2");
