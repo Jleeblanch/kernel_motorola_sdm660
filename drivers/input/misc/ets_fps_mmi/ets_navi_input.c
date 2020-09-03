@@ -56,7 +56,7 @@ struct navi_cmd_struct cmd_list;
 
 #define ENABLE_SWIPE_UP_DOWN	ENABLE
 #define ENABLE_SWIPE_LEFT_RIGHT	ENABLE
-#define ENABLE_FINGER_DOWN_UP	DISABLE
+#define ENABLE_FINGER_DOWN_UP	ENABLE
 #define KEY_FPS_DOWN   614
 #define KEY_FPS_UP     615
 #define KEY_FPS_TAP    616
@@ -144,9 +144,9 @@ static unsigned int prev_keycode;
  * @ ENABLE_TRANSLATED_LONG_TOUCH
  *     ENABLE/DISABLE : enable/disable long-touch event.
  */
-#define ENABLE_TRANSLATED_SINGLE_CLICK	DISABLE
+#define ENABLE_TRANSLATED_SINGLE_CLICK	ENABLE
 #define ENABLE_TRANSLATED_DOUBLE_CLICK	DISABLE
-#define ENABLE_TRANSLATED_LONG_TOUCH	DISABLE
+#define ENABLE_TRANSLATED_LONG_TOUCH	ENABLE
 
 
 /*
@@ -717,12 +717,19 @@ void uinput_egis_destroy(struct etspi_data *etspi)
 	DEBUG_PRINT("Egis navigation driver, %s\n", __func__);
 
 
+	g_DoubleClickJiffies = 0;
+	g_SingleClickJiffies = 0;
+
+	if (etspi->input_dev != NULL) {
+		input_unregister_device(etspi->input_dev);
+		input_free_device(etspi->input_dev);
+		etspi->input_dev = NULL;
+	}
+
 #if ENABLE_TRANSLATED_LONG_TOUCH
 	del_timer(&long_touch_timer);
 #endif
 
-	if (etspi->input_dev != NULL)
-		input_free_device(etspi->input_dev);
 	if (nav_kthread)
 		kthread_stop(nav_kthread);
 
@@ -756,6 +763,8 @@ void sysfs_egis_init(struct etspi_data *etspi)
 		platform_device_put(etspi->spi);
 		return;
 	}
+
+	kobject_uevent(&etspi->spi->dev.kobj, KOBJ_CHANGE);  // chengql2
 }
 
 void sysfs_egis_destroy(struct etspi_data *etspi)
@@ -763,6 +772,7 @@ void sysfs_egis_destroy(struct etspi_data *etspi)
 	DEBUG_PRINT("Egis navigation driver, %s\n", __func__);
 
 	if (etspi->spi) {
+		sysfs_remove_group(&etspi->spi->dev.kobj, &attribute_group);
 		platform_device_del(etspi->spi);
 		platform_device_put(etspi->spi);
 	}
