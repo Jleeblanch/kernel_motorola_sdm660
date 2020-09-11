@@ -81,4 +81,3 @@ obj-$(CONFIG_FSUSB42_MUX) += fsusb42_mux.o
 obj-$(CONFIG_MODS_MODBUS_SWITCH) += modbus_switch.o
 obj-$(CONFIG_MOTOMODS) += motomods/
 obj-$(CONFIG_INPUT_AWINIC_HAPTIC) += aw869x/
-obj-$(CONFIG_MMI_SYSTEM_TEMP)	+= mmi_sys_temp/
