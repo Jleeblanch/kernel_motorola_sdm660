@@ -68,7 +68,6 @@ obj-y				+= qcom/
 obj-$(CONFIG_QPNP_MISC) 	+= qpnp-misc.o
 obj-$(CONFIG_MEMORY_STATE_TIME) += memory_state_time.o
 obj-$(CONFIG_INPUT_AWINIC_HAPTIC) += awinic/aw869x/
-obj-$(CONFIG_MMI_SYSTEM_TEMP)	+= mmi_sys_temp/
 obj-$(CONFIG_HAPTIC_DRV2624)	+= drv2624.o
 obj-$(CONFIG_HAPTIC_DRV2625)	+= drv2625.o
 obj-$(CONFIG_ALSA_TO_H2W) += alsa-to-h2w-headset.o
